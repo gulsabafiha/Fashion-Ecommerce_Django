@@ -1,0 +1,50 @@
+{% load static %}
+<head>
+    {% include 'plugin-css.html' %}
+</head>
+
+<body>
+      {% include 'header.html' %}
+  
+<div id="signup-bg">
+
+<div class='signup-div' style="width:900px">
+
+  <h3 class="text-dark text-center">SIGN UP</h3>
+
+  {% if messages %} 
+    {% for message in messages %}
+      <div{%if message.tags%} class="alert alert-info alert-dismissible fade show mb-5" role="alert" {%endif%} >
+        <strong>{{message}}</strong>
+      </div>
+
+    {% endfor %} 
+  {% endif %}
+
+  <form action="" method="post" novalidate>
+    {% csrf_token %} 
+    {% for fm in form %}
+
+      <div class="form-group">
+        {{fm.label_tag}} {{fm}}
+        <small class="text-warning"> {{fm.errors|striptags}}</small>
+      </div>
+    {% endfor %}
+
+    <input type="submit" class="btn btn-outline-primary-2" value="SIGN UP" />
+
+    {% if form.non_field_errors %} 
+      {% for error in form.non_field_errors %}
+        <p class="alert alert-danger my-3">{{error}}</p>
+      {% endfor %} 
+    {% endif %}
+      
+  </form>
+</div>
+</div>
+{% include 'footer.html' %}
+{% include 'plugin-js.html' %}
+</body>
+
+
+

@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <!-- molla/index-7.html  22 Nov 2019 09:56:39 GMT -->
+  <head>
+    {% include 'plugin-css.html' %}
+  </head>
+
+  <body>
+    <div class="page-wrapper">
+      {% include 'header.html' %}
+      <main class="main">
+        {% include 'hero-section.html' %} {% include 'featuredproducts.html' %}
+        {% include 'newarrival.html' %} {% include 'blogproduct.html' %}
+      </main>
+      {% include 'footer.html' %}
+
+      <button id="scroll-top" title="Back to Top">
+        <i class="icon-arrow-up"></i>
+      </button>
+
+      <!-- Plugins JS File -->
+      {% include 'plugin-js.html' %}
+    </div>
+  </body>
+
+  <!-- molla/index-7.html  22 Nov 2019 09:56:58 GMT -->
+</html>

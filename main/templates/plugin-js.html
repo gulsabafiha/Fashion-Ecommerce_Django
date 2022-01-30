@@ -1,0 +1,120 @@
+{% load static %}
+
+<!-- Google Map -->
+{% comment %}
+<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDc3LRykbLB-y8MuomRUIY0qH5S6xgBLX4"></script>
+{% endcomment %}
+
+<script src="{% static 'assets/js/jquery.min.js' %}"></script>
+<script src="{% static 'assets/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'assets/js/jquery.hoverIntent.min.js' %}"></script>
+<script src="{% static 'assets/js/jquery.waypoints.min.js' %}"></script>
+<script src="{% static 'assets/js/superfish.min.js' %}"></script>
+<script src="{% static 'assets/js/bootstrap-input-spinner.js' %}"></script>
+<script src="{% static 'assets/js/owl.carousel.min.js' %}"></script>
+<script src="{% static 'assets/js/jquery.plugin.min.js' %}"></script>
+<script src="{% static 'assets/js/jquery.magnific-popup.min.js' %}"></script>
+<script src="{% static 'assets/js/jquery.countdown.min.js' %}"></script>
+<script src="{% static 'assets/js/nouislider.min.js' %}"></script>
+<script src="{% static 'assets/js/wNumb.js' %}"></script>
+<script src="{% static 'assets/js/jquery.countTo.js' %}"></script>
+<!-- Main JS File -->
+<script src="{% static 'assets/js/main.js' %}"></script>
+<script src="{% static 'assets/js/demos/demo-7.js' %}"></script>
+<script src="{% static 'assets/js/myscript.js' %}"></script>
+<!--font awsome kit-->
+<script
+  src="https://kit.fontawesome.com/e70e518fd0.js"
+  crossorigin="anonymous"
+></script>
+<!--Sweet Alert CDN--> 
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script>
+  calculateCart();
+  calculateTotal();
+
+  function calculateTotal() {
+    total = document.getElementById("amount").innerText;
+    totalPrice = parseFloat(total);
+
+    const rbs = document.querySelectorAll('input[name="shipping"]');
+    let selectedValue;
+    for (const rb of rbs) {
+      if (rb.checked) {
+        selectedValue = parseFloat(rb.value);
+        break;
+      }
+    }
+    total_amount = totalPrice + selectedValue;
+    document.getElementById("totalamount").innerText = total_amount;
+  }
+
+  function calculateCart() {
+    var cprice = document.getElementsByClassName("product-price");
+    var ctotal = 0;
+    for (var i = 0; i < cprice.length; i++) {
+      var thisprice = parseFloat(cprice[i].innerText);
+      ctotal = ctotal + thisprice;
+    }
+    console.log(ctotal)
+    document.getElementById("amount").innerText = ctotal;
+    
+  }
+
+  function cartValueChange(number, isIncrease, cart1, cart2) {
+    const cartValueCount = document.getElementById(number);
+    const cartCount = parseInt(cartValueCount.value);
+
+    let cartNewCount = cartCount;
+    if (isIncrease == true) {
+      cartNewCount = cartCount + 1;
+    } else if (isIncrease == false && cartCount > 1) {
+      cartNewCount = cartCount - 1;
+    }
+    cartValueCount.value = cartNewCount;
+
+    const cartOldPrice = document.getElementById(cart1 + "-total");
+    const cartPrice = cartOldPrice.innerText;
+    const cartNewPrice = parseInt(cartPrice);
+    let cartTotal = cartNewCount * cartNewPrice;
+
+    document.getElementById(cart2 + "-total").innerText = cartTotal;
+
+    calculateCart();
+    calculateTotal();
+  }
+</script>
+<script>
+  $(document).ready(function () {
+    totalCart();
+    function totalCart() {
+      $.ajax({
+        url: "/total cart",
+        success: function (res) {
+          document.getElementById("total-cart").innerText = res;
+        },
+      });
+    }
+
+    $(document).on("click", ".btn-cart", function () {
+      var _pid = $(this).attr("data-product");
+      var _qty = $(this).attr("data-qty");
+
+      // Ajax
+      $.ajax({
+        url: "/add-to-cart",
+        data: {
+          product: _pid,
+          qty: _qty,
+        },
+        dataType: "json",
+        success: function (res) {
+          totalCart();
+          swal(res.string);
+        },
+      });
+      // EndAjax
+    });
+  });
+</script> 

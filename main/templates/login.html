@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- molla/login.html  22 Nov 2019 10:04:03 GMT -->
+<head>
+    {% include 'plugin-css.html' %}
+</head>
+
+<body>
+{% include 'header.html' %}
+   
+            
+<div  id="login-bg">
+    <div class='login-div' style="width:900px;
+ " >       
+      <h3 class="text-dark my-5 text-center">LOG IN</h3>
+      </hr>
+
+          {% if messages %} 
+            {% for message in messages %}
+              <div {% if message.tags %} class="alert alert-info alert-dismissible fade show mb-5" role="alert" {% endif %} >
+                <strong>{{message}}</strong>
+              </div>
+
+            {% endfor %} 
+          {% endif %}
+
+          <form action="" method="post"  novalidate>
+            {% csrf_token %} 
+            {% for fm in form %}
+
+              <div class="form-group label-div">
+                {{fm.label_tag}} {{fm}}
+                <small class="text-warning"> {{fm.errors|striptags}}</small>
+              </div>
+            {% endfor %}
+
+            <input type="submit" class="btn btn-outline-primary-2" value="LOG IN" />
+
+            {% if form.non_field_errors %}
+             {% for error in form.non_field_errors %}
+                <p class="alert alert-danger my-3">{{error}}</p>
+              {% endfor %} 
+            {% endif %}
+          </form>
+    </div>
+</div>
+{% include 'footer.html' %}
+{% include 'plugin-js.html' %}
+</body>
+
+

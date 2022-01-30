@@ -1,0 +1,122 @@
+{% load static %}
+<div class="mb-6"></div><!-- End .mb-6 -->
+
+   <div class="container-fluid">
+        <div class="heading heading-center mb-3">
+            <h2 class="title">NEW ARRIVALS</h2><!-- End .title -->
+
+            <ul class="nav nav-pills justify-content-center" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="new-women-link" data-toggle="tab" href="#new-women-tab" role="tab" aria-controls="new-women-tab" aria-selected="true">Womens Clothing</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" id="new-men-link" data-toggle="tab" href="#new-men-tab" role="tab" aria-controls="new-men-tab" aria-selected="false">Mens Clothing</a>
+                </li>
+            </ul>
+       </div><!-- End .heading -->
+
+        <div class="tab-content">
+            <div class="tab-pane p-0 fade show active" id="new-women-tab" role="tabpanel" aria-labelledby="new-women-link">
+                <div class="products">   
+                    <div class="row justify-content-center">
+                     {% for women in arrivalwomen %}
+                        <div class="col-6 col-md-4 col-lg-3 col-xl-5col">
+                           
+                                <div class="product product-7 text-center">
+                                    <figure class="product-media">
+                                        <a href="#">
+                                            <img src={{women.color.url}} alt="Product image" class="product-image">
+                                            <img src={{women.hover_image.url}}  alt="Product image" class="product-image-hover">
+                                        </a>
+
+                                        <div class="product-action-vertical">
+                                            <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
+                                            <a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
+                                        </div><!-- End .product-action-vertical -->
+
+                                            <div class="product-action">
+                                                {% if user.is_authenticated %}
+                                                <a  class="btn-product btn-cart" data-product="{{women.id}}" data-qty="1"><span>add to cart</span></a>
+                                                {% else %}
+                                                <a  class="btn-product " onclick="swal({text:'Please login for add to cart',buttons:true}).then((willDelete)=>{if(willDelete){location.href='{% url 'login' %}'}else{}});"><span>add to cart</span></a>
+                                                {% endif %}
+                                            </div><!-- End .product-action -->
+                                        </figure><!-- End .product-media -->
+
+                                        <div class="product-body">
+                                            <h3 class="product-title"><a href="{% url 'product' women.id %}">{{women.title}}</a></h3><!-- End .product-title -->
+                                            <div class="product-price">
+                                                <span class="new-price">${{women.offer_price}}</span>
+                                                <span class="old-price">${{women.price}}</span>
+                                            </div><!-- End .product-price -->
+                                            <div class="ratings-container">
+                                                <div class="ratings">
+                                                    <div class="ratings-val" style="width: 40%;"></div><!-- End .ratings-val -->
+                                                </div><!-- End .ratings -->
+                                                <span class="ratings-text">( {{women.review}} Reviews )</span>
+                                            </div><!-- End .rating-container -->
+                                        </div><!-- End .product-body -->
+                                    </div><!-- End .product -->
+                                    
+                                </div><!-- End .col-sm-6 col-md-4 col-lg-3 --> 
+                                {% endfor %}                                                                   
+                           </div><!-- End .row -->
+                        </div><!-- End .products -->
+                    </div><!-- .End .tab-pane -->
+
+
+                    <div class="tab-pane p-0 fade" id="new-men-tab" role="tabpanel" aria-labelledby="new-men-link">
+                        <div class="products">
+                            <div class="row justify-content-center">
+                            {% for men in arrivalmen %}
+                                <div class="col-6 col-md-4 col-lg-3 col-xl-5col">
+                                
+                                    <div class="product product-7 text-center">
+                                        <figure class="product-media">
+                                            <a href="#">
+                                                <img src={{men.color.url}} alt="Product image" class="product-image">
+                                                <img src={{men.hover_image.url}} alt="Product image" class="product-image-hover">
+                                            </a>
+
+                                            <div class="product-action-vertical">
+                                                <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
+                                                <a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
+                                            </div><!-- End .product-action-vertical -->
+
+                                            <div class="product-action">
+                                                {% if user.is_authenticated %}
+                                                <a  class="btn-product btn-cart" data-product="{{men.id}}" data-qty="1"><span>add to cart</span></a>
+                                                {% else %}
+                                                <a  class="btn-product " onclick="swal({text:'Please login for add to cart',buttons:true}).then((willDelete)=>{if(willDelete){location.href='{% url 'login' %}'}else{}});"><span>add to cart</span></a>
+                                                {% endif %}
+                                            </div><!-- End .product-action -->
+                                        </figure><!-- End .product-media -->
+
+                                        <div class="product-body">
+                                            <h3 class="product-title"><a href={% url 'product' men.id %}>{{men.title}}</a></h3><!-- End .product-title -->
+                                            <div class="product-price">
+                                                ${{men.price}}
+                                            </div><!-- End .product-price -->
+                                            <div class="ratings-container">
+                                                <div class="ratings">
+                                                    <div class="ratings-val" style="width: 20%;"></div><!-- End .ratings-val -->
+                                                </div><!-- End .ratings -->
+                                                <span class="ratings-text">( {{men.review}} Reviews )</span>
+                                            </div><!-- End .rating-container -->
+                                            <div class="product-nav product-nav-dots">
+                                                <a href="#" class="active" style="background: #d5ad81;"><span class="sr-only">Color name</span></a>
+                                                <a href="#" style="background: #333333;"><span class="sr-only">Color name</span></a>
+                                            </div><!-- End .product-nav -->
+                                        </div><!-- End .product-body -->
+                                    </div><!-- End .product -->
+                                    
+                                </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
+                                {% endfor %} 
+                            </div><!-- End .row -->
+                        </div><!-- End .products -->
+                    </div><!-- .End .tab-pane -->
+                </div><!-- End .tab-content -->
+
+                <div class="more-container text-center mt-2">
+                    <a href="#" class="btn btn-outline-dark-3 btn-more"><span>Load more</span><i class="icon-long-arrow-right"></i></a>
+                </div><!-- End .more-container -->

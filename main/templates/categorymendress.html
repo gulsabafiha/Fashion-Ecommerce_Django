@@ -1,0 +1,87 @@
+{% load static %}
+
+{% include 'plugin-css.html' %}
+{% include 'header.html' %}
+
+        <main class="main">
+        	<div class="page-header text-center" id="bg"  >
+        		<div class="container">
+        			<h1 class="page-title">Men Dresses<span>Shop</span></h1>
+        		</div><!-- End .container -->
+        	</div><!-- End .page-header -->
+            
+                <div class="products">
+                        <div class="row">
+                        {% for i in mendress %}
+                            <div class="col-6 col-md-4 col-lg-4 col-xl-3">
+                                <div class="product product-7 text-center">
+            <figure class="product-media">
+              <a href="#">
+                <img src="{{ i.color.url }}" alt="Product image" />
+                <img src={{i.hover_image.url}} alt="Product image" class="product-image-hover">
+              </a>
+
+              <div class="product-action-vertical">
+                <a href="#" class="btn-product-icon btn-wishlist btn-expandable"
+                  ><span>add to wishlist</span></a
+                >
+                <a
+                  href="popup/quickView.html"
+                  class="btn-product-icon btn-quickview"
+                  title="Quick view"
+                  ><span>Quick view</span></a
+                >
+              </div>
+             <!-- End .product-action-vertical -->
+
+              <div class="product-action">
+              {% if user.is_authenticated %}
+                <a  class="btn-product btn-cart" data-product="{{i.id}}" data-qty="1"
+                  ><span>add to cart</span></a
+                >
+                {% else %}
+                <a  class="btn-product " onclick="swal({text:'Please login for add to cart',buttons:true}).then((willDelete)=>{if(willDelete){location.href='{% url 'login' %}'}else{}});"><span>add to cart</span></a>
+                {% endif %}
+              </div>
+              <!-- End .product-action -->
+            </figure>
+            <!-- End .product-media -->
+
+            <div class="product-body">
+              <h3 class="product-title"><a href={% url 'product' i.id %}>{{i.title}}</a></h3>
+              <!-- End .product-title -->
+              <div class="product-price">${{i.price}}</div>
+              <!-- End .product-price -->
+              <div class="ratings-container">
+                <div class="ratings">
+                  <div class="ratings-val" style="width: 20%"></div>
+                  <!-- End .ratings-val -->
+                </div>
+                <!-- End .ratings -->
+                <span class="ratings-text">( {{i.review}} Reviews )</span>
+              </div>
+              <!-- End .rating-container -->
+            </div>
+            <!-- End .product-body -->
+          </div>
+          <!-- End .product -->
+                            </div><!-- End .col-sm-6 col-lg-4 col-xl-3 -->
+                            {% endfor %}
+                        </div><!-- End .row -->
+
+                        <div class="load-more-container text-center">
+                            <a href="#" class="btn btn-outline-darker btn-load-more">More Products <i class="icon-refresh"></i></a>
+                        </div><!-- End .load-more-container -->
+                    </div><!-- End .products -->
+
+                </div><!-- End .container -->
+            </div><!-- End .page-content -->
+        </main><!-- End .main -->
+
+      {% include 'footer.html' %}
+      {% include 'plugin-js.html' %}
+</body>
+
+
+<!-- molla/category-boxed.html  22 Nov 2019 10:03:02 GMT -->
+</html>
